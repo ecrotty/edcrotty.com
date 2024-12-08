@@ -1,3 +1,4 @@
+---
 import { Analytics } from '@vercel/analytics/react';
 
 interface Props {
@@ -5,13 +6,12 @@ interface Props {
   description?: string;
 }
 
-const defaultTitle = import.meta.env.PUBLIC_SITE_TITLE || "Ed Crotty's Professional Portfolio - IT Leader";
-const defaultDescription = import.meta.env.PUBLIC_SITE_DESCRIPTION || "Ed Crotty's Professional Portfolio - IT Leader";
+const props = Astro.props;
+const siteTitle = process.env.PUBLIC_SITE_TITLE || "Ed Crotty's Professional Portfolio - IT Leader";
+const siteDescription = process.env.PUBLIC_SITE_DESCRIPTION || "Ed Crotty's Professional Portfolio - IT Leader";
 
-const { 
-  title = defaultTitle,
-  description = defaultDescription
-} = Astro.props;
+const title = props.title || siteTitle;
+const description = props.description || siteDescription;
 ---
 
 <!doctype html>
