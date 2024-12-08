@@ -2,11 +2,10 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 
-// Ensure environment variables are available
-const githubUsername = process.env.PUBLIC_GITHUB_USERNAME;
-if (!githubUsername) {
-  console.warn('Warning: PUBLIC_GITHUB_USERNAME environment variable is not set');
-}
+// Debug environment variables
+console.log('Build-time environment variables:');
+console.log('PUBLIC_GITHUB_USERNAME:', process.env.PUBLIC_GITHUB_USERNAME);
+console.log('NODE_ENV:', process.env.NODE_ENV);
 
 export default defineConfig({
   integrations: [tailwind(), react()],
@@ -15,7 +14,16 @@ export default defineConfig({
     // Ensure environment variables are properly passed to the client
     define: {
       'import.meta.env.PUBLIC_GITHUB_USERNAME': JSON.stringify(process.env.PUBLIC_GITHUB_USERNAME),
-      'import.meta.env.PUBLIC_SITE_DOMAIN': JSON.stringify(process.env.PUBLIC_SITE_DOMAIN),
     },
+    // Add build-time logging
+    build: {
+      rollupOptions: {
+        onwarn(warning, warn) {
+          // Log any build warnings
+          console.log('Build warning:', warning);
+          warn(warning);
+        }
+      }
+    }
   },
 });
