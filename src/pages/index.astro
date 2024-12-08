@@ -10,12 +10,6 @@ import type { Repository } from '../types/github';
 // Get GitHub username from environment variables
 const githubUsername = process.env.PUBLIC_GITHUB_USERNAME;
 
-// Debug log
-console.log('Server-side environment check:', {
-  hasUsername: !!githubUsername,
-  nodeEnv: process.env.NODE_ENV
-});
-
 // Fetch GitHub data at build time
 let repos: Repository[] = [];
 if (githubUsername) {
@@ -38,8 +32,6 @@ if (githubUsername) {
           updated_at: repo.updated_at,
           topics: repo.topics || []
         }));
-    } else {
-      console.error('Failed to fetch GitHub repos:', response.status, response.statusText);
     }
   } catch (error) {
     console.error('Error fetching GitHub repositories:', error);

@@ -13,17 +13,9 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Debug log
-  console.log('GitHubStats rendered with:', {
-    hasUsername: !!username,
-    initialReposCount: initialRepos.length,
-    envUsername: process.env.PUBLIC_GITHUB_USERNAME
-  });
-
   useEffect(() => {
     const fetchRepos = async () => {
       if (!username) {
-        console.error('Username not provided to GitHubStats');
         setError('GitHub username not configured');
         return;
       }
@@ -55,7 +47,6 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
         setRepos(filteredRepos);
         setError(null);
       } catch (err) {
-        console.error('Error fetching GitHub repos:', err);
         setError(err instanceof Error ? err.message : 'Failed to fetch repositories');
       } finally {
         setLoading(false);
