@@ -1,12 +1,14 @@
----
 import { Analytics } from '@vercel/analytics/react';
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
 }
 
-const { title, description = process.env.PUBLIC_SITE_TITLE || "Ed Crotty's Professional Portfolio - IT Leader" } = Astro.props;
+const { 
+  title = process.env.PUBLIC_SITE_TITLE || "Ed Crotty's Professional Portfolio - IT Leader",
+  description = process.env.PUBLIC_SITE_DESCRIPTION || "Ed Crotty's Professional Portfolio - IT Leader"
+} = Astro.props;
 ---
 
 <!doctype html>
