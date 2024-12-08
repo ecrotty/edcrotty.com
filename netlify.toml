@@ -1,0 +1,19 @@
+[build]
+command = "npm run build"
+publish = "dist"
+
+[build.environment]
+NODE_VERSION = "18"
+
+[dev]
+command = "npm run dev"
+targetPort = 4321
+
+# Ensure environment variables are available during build
+[context.production.environment]
+PUBLIC_GITHUB_USERNAME = ""  # Will be overridden by Netlify UI settings
+PUBLIC_SITE_DOMAIN = ""     # Will be overridden by Netlify UI settings
+
+[context.deploy-preview.environment]
+PUBLIC_GITHUB_USERNAME = ""  # Will be overridden by Netlify UI settings
+PUBLIC_SITE_DOMAIN = ""     # Will be overridden by Netlify UI settings
