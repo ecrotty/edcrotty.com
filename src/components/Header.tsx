@@ -37,7 +37,7 @@ const Header = () => {
               1000,
               'AI Strategist',
               1000,
-              'Cloud Ops Professional',
+              'Cloud Operations Specialist',
               1000,
               'Infrastructure SME',
               1000,

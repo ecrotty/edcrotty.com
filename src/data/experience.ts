@@ -3,7 +3,7 @@ import type { Experience } from '../types/experience';
 export const experiences: Experience[] = [
   {
     company: "Tandigm Health",
-    role: "Cloud Operations Professional",
+    role: "Cloud Operations Specialist",
     period: "October 2024 - Present",
     description: [
       "Infrastructure Subject Matter Expert (SME) leading standardization efforts",
