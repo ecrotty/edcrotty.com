@@ -5,11 +5,40 @@ import Timeline from '../components/experience/Timeline';
 import GitHubStats from '../components/github/GitHubStats';
 import SkillsMatrix from '../components/skills/SkillsMatrix';
 import HiddenTechnicalShowcase from '../components/showcase/HiddenTechnicalShowcase';
+import type { Repository } from '../types/github';
 
 // Get GitHub username from environment variables
 const githubUsername = import.meta.env.PUBLIC_GITHUB_USERNAME;
 if (!githubUsername) {
   console.error('PUBLIC_GITHUB_USERNAME environment variable is not set');
+}
+
+// Fetch GitHub data at build time
+let repos: Repository[] = [];
+if (githubUsername) {
+  try {
+    const response = await fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=6`);
+    if (response.ok) {
+      const data = await response.json();
+      repos = data
+        .filter((repo: any) => !repo.fork)
+        .slice(0, 6)
+        .map((repo: any) => ({
+          name: repo.name,
+          description: repo.description,
+          html_url: repo.html_url,
+          stargazers_count: repo.stargazers_count,
+          forks_count: repo.forks_count,
+          language: repo.language,
+          language_color: null,
+          private: repo.private,
+          updated_at: repo.updated_at,
+          topics: repo.topics || []
+        }));
+    }
+  } catch (error) {
+    console.error('Error fetching GitHub repositories:', error);
+  }
 }
 ---
 
@@ -17,7 +46,7 @@ if (!githubUsername) {
   <main class="animate-fade-in">
     <Header client:load />
     <Timeline client:visible />
-    <GitHubStats username={githubUsername} client:visible />
+    <GitHubStats username={githubUsername} initialRepos={repos} client:visible />
     <SkillsMatrix client:visible />
     <!-- Technical Showcase section is hidden but preserved in the codebase -->
     <HiddenTechnicalShowcase client:visible />

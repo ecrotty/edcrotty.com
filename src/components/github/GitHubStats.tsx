@@ -5,51 +5,63 @@ import type { Repository } from '../../types/github';
 
 interface GitHubStatsProps {
   username: string;
+  initialRepos: Repository[];
 }
 
-const GitHubStats: React.FC<GitHubStatsProps> = ({ username }) => {
-  const [repos, setRepos] = useState<Repository[]>([]);
-  const [loading, setLoading] = useState(true);
+const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => {
+  const [repos, setRepos] = useState<Repository[]>(initialRepos);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchRepos = async () => {
-      try {
-        if (!username) {
-          throw new Error('GitHub integration is not properly configured. Please check the environment variables in your Netlify dashboard.');
-        }
+    // Only fetch if we don't have initial repos
+    if (initialRepos.length === 0 && username) {
+      setLoading(true);
+      fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`)
+        .then(response => {
+          if (!response.ok) throw new Error('Failed to fetch repositories');
+          return response.json();
+        })
+        .then(data => {
+          const filteredRepos = data
+            .filter((repo: any) => !repo.fork)
+            .slice(0, 6)
+            .map((repo: any) => ({
+              name: repo.name,
+              description: repo.description,
+              html_url: repo.html_url,
+              stargazers_count: repo.stargazers_count,
+              forks_count: repo.forks_count,
+              language: repo.language,
+              language_color: null,
+              private: repo.private,
+              updated_at: repo.updated_at,
+              topics: repo.topics || []
+            }));
+          setRepos(filteredRepos);
+        })
+        .catch(err => {
+          setError(err instanceof Error ? err.message : 'Failed to fetch repositories');
+          console.error('GitHub integration error:', err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [username, initialRepos]);
 
-        const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`);
-        if (!response.ok) throw new Error('Failed to fetch repositories');
-        
-        const data = await response.json();
-        const filteredRepos = data
-          .filter((repo: any) => !repo.fork)
-          .slice(0, 6)
-          .map((repo: any) => ({
-            name: repo.name,
-            description: repo.description,
-            html_url: repo.html_url,
-            stargazers_count: repo.stargazers_count,
-            forks_count: repo.forks_count,
-            language: repo.language,
-            language_color: null,
-            private: repo.private,
-            updated_at: repo.updated_at,
-            topics: repo.topics || []
-          }));
-
-        setRepos(filteredRepos);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch repositories');
-        console.error('GitHub integration error:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRepos();
-  }, [username]);
+  if (!username) {
+    return (
+      <section className="py-20 px-4 bg-white/5">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold mb-8 text-center">Featured GitHub Projects</h2>
+          <div className="text-center text-red-400">
+            GitHub integration is not properly configured. Please check the environment variables in your Netlify dashboard.
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-20 px-4 bg-white/5">
