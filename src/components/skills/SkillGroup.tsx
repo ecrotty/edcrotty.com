@@ -15,8 +15,15 @@ const categoryTitles = {
 };
 
 const SkillGroup: React.FC<SkillGroupProps> = ({ group }) => {
-  // Sort skills by level in descending order
-  const sortedSkills = [...group.skills].sort((a, b) => b.level - a.level);
+  // Sort skills by level (descending) and then alphabetically
+  const sortedSkills = [...group.skills].sort((a, b) => {
+    // First sort by level (descending)
+    if (b.level !== a.level) {
+      return b.level - a.level;
+    }
+    // Then sort alphabetically for equal levels
+    return a.name.localeCompare(b.name);
+  });
 
   return (
     <motion.div
