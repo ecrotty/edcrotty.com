@@ -15,7 +15,6 @@ While this is my personal resume website, I've made it available as a template f
 - 🔧 Technical showcase section
 - 📊 GitHub integration for displaying repositories and stats
 - 📅 Calendly integration for scheduling meetings
-- 💬 Modern contact interface with quick chat
 - ⚡ Built with Astro for optimal performance
 - 🎯 SEO-friendly structure
 
@@ -28,14 +27,14 @@ While this is my personal resume website, I've made it available as a template f
 │   └── company-logos/      # Add your company logos here
 ├── src/
 │   ├── components/
-│   │   ├── contact/        # Contact button and forms
+│   │   ├── contact/        # Calendly scheduling button
 │   │   ├── experience/     # Timeline and experience components
 │   │   ├── github/         # GitHub integration components
 │   │   ├── header/         # Header animations and styling
 │   │   ├── showcase/       # Project showcase components
 │   │   └── skills/        # Skills matrix components
 │   ├── data/
-│   │   ├── contact.ts      # Contact configuration
+│   │   ├── contact.ts      # Calendly configuration
 │   │   ├── experience.ts   # Your work experience data
 │   │   ├── projects.ts     # Your project showcase data
 │   │   └── skills.ts       # Your skills matrix data
@@ -105,10 +104,10 @@ Note: After updating environment variables in Netlify, you may need to trigger a
    - Set your GitHub username in environment variables
    - The site will automatically display your pinned repositories
 
-6. **Contact Integration**:
-   - Configure your Calendly URL in environment variables
-   - Customize contact messages in `src/data/contact.ts`
-   - The contact button appears in the bottom right of every page
+6. **Calendly Integration**:
+   - Set your Calendly URL in environment variables
+   - A "Schedule Meeting" button will appear in the bottom right of every page
+   - Customize button text and description in `src/data/contact.ts`
 
 ## 🚀 Getting Started
 
