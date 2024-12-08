@@ -63,18 +63,12 @@ const ContactButton = () => {
         onClick={toggleMenu}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="bg-accent text-white px-6 py-3 rounded-full font-medium shadow-lg flex items-center gap-2 hover:bg-accent/80 transition-colors"
+        className="bg-accent text-white px-3 sm:px-6 py-3 rounded-full font-medium shadow-lg flex items-center gap-2 hover:bg-accent/80 transition-colors"
       >
-        {isOpen ? (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        ) : (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-        )}
-        Schedule Meeting
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <span className="hidden sm:inline">Schedule Meeting</span>
       </motion.button>
     </div>
   );
