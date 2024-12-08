@@ -42,6 +42,32 @@ While this is my personal resume website, I've made it available as a template f
 │   └── types/              # TypeScript type definitions
 ```
 
+## ⚙️ Environment Variables
+
+The following environment variables need to be configured:
+
+```bash
+# Required for GitHub integration
+PUBLIC_GITHUB_USERNAME=your-github-username
+
+# Optional site configuration
+PUBLIC_SITE_DOMAIN=yourdomain.com
+PUBLIC_SITE_URL=https://yourdomain.com
+PUBLIC_SITE_TITLE=Your Name - Professional Resume
+PUBLIC_SITE_DESCRIPTION=Personal resume website and portfolio
+```
+
+### Setting Up Environment Variables
+
+1. Local Development:
+   - Copy `.env.example` to `.env`
+   - Update the values in `.env`
+
+2. Netlify Deployment:
+   - Go to your Netlify site dashboard
+   - Navigate to Site settings > Build & deploy > Environment
+   - Add the required environment variables
+
 ## 🛠️ Customization Guide
 
 1. **Personal Information**:
@@ -61,35 +87,8 @@ While this is my personal resume website, I've made it available as a template f
    - Customize the showcase layout in `src/components/showcase/`
 
 5. **GitHub Integration**:
-   - Copy `.env.example` to `.env` and update the values
-   - Set your GitHub username in `PUBLIC_GITHUB_USERNAME`
-   - Update other site configuration variables as needed
-
-## ⚙️ Environment Variables
-
-The following environment variables can be configured in your `.env` file:
-
-```bash
-# GitHub Configuration
-PUBLIC_GITHUB_USERNAME=your-github-username    # Required for GitHub integration
-
-# Site Configuration
-PUBLIC_SITE_DOMAIN=yourdomain.com             # Your root domain (e.g., example.com)
-PUBLIC_SITE_URL=https://yourdomain.com        # Full URL to your website
-PUBLIC_SITE_TITLE=Your Name - Professional Resume
-PUBLIC_SITE_DESCRIPTION=Personal resume website and portfolio
-```
-
-These variables are used throughout the site:
-- `PUBLIC_GITHUB_USERNAME`: Used for GitHub integration and repository links
-- `PUBLIC_SITE_DOMAIN`: Used for generating URLs to subdomains (e.g., components.yourdomain.com)
-- `PUBLIC_SITE_URL`: Used for SEO and canonical URLs
-- `PUBLIC_SITE_TITLE` and `PUBLIC_SITE_DESCRIPTION`: Used for metadata and SEO
-
-To set up your environment:
-1. Copy `.env.example` to `.env`
-2. Update the values in `.env` with your information
-3. Never commit your `.env` file (it's already in .gitignore)
+   - Set your GitHub username in environment variables
+   - The site will automatically display your pinned repositories
 
 ## 🚀 Getting Started
 
