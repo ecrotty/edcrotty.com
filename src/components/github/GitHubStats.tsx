@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Octokit } from 'octokit';
 import RepoCard from './RepoCard';
 import type { Repository } from '../../types/github';
 
@@ -12,23 +11,34 @@ const GitHubStats: React.FC = () => {
   useEffect(() => {
     const fetchRepos = async () => {
       try {
-        const octokit = new Octokit();
-        const response = await octokit.request('GET /users/ecrotty/repos', {
-          username: 'ecrotty',
-          sort: 'updated',
-          per_page: 2,
-          headers: {
-            'X-GitHub-Api-Version': '2022-11-28'
-          }
-        });
+        const username = import.meta.env.PUBLIC_GITHUB_USERNAME;
+        if (!username) {
+          throw new Error('GitHub username not configured. Please set PUBLIC_GITHUB_USERNAME in your environment variables.');
+        }
 
-        const filteredRepos = response.data
-          .filter((repo: Repository) => !repo.fork)
-          .slice(0, 2);
+        const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`);
+        if (!response.ok) throw new Error('Failed to fetch repositories');
+        
+        const data = await response.json();
+        const filteredRepos = data
+          .filter((repo: any) => !repo.fork)
+          .slice(0, 6)
+          .map((repo: any) => ({
+            name: repo.name,
+            description: repo.description,
+            html_url: repo.html_url,
+            stargazers_count: repo.stargazers_count,
+            forks_count: repo.forks_count,
+            language: repo.language,
+            language_color: null,
+            private: repo.private,
+            updated_at: repo.updated_at,
+            topics: repo.topics || []
+          }));
 
         setRepos(filteredRepos);
       } catch (err) {
-        setError('Failed to fetch repositories');
+        setError(err instanceof Error ? err.message : 'Failed to fetch repositories');
         console.error(err);
       } finally {
         setLoading(false);
@@ -37,6 +47,8 @@ const GitHubStats: React.FC = () => {
 
     fetchRepos();
   }, []);
+
+  const username = import.meta.env.PUBLIC_GITHUB_USERNAME;
 
   return (
     <section className="py-20 px-4 bg-white/5">
@@ -60,17 +72,32 @@ const GitHubStats: React.FC = () => {
           </div>
         )}
 
-        {!loading && !error && (
+        {!loading && !error && repos.length === 0 && (
+          <div className="text-center text-gray-300">
+            No repositories found.
+          </div>
+        )}
+
+        {!loading && !error && repos.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {repos.map((repo, index) => (
-              <RepoCard key={repo.name} repo={repo} index={index} />
+              <div 
+                key={repo.name} 
+                className={`${
+                  index === repos.length - 1 && repos.length % 2 !== 0
+                    ? 'col-span-2'
+                    : ''
+                }`}
+              >
+                <RepoCard repo={repo} index={index} />
+              </div>
             ))}
           </div>
         )}
 
         <div className="mt-8 text-center">
           <a
-            href="https://github.com/ecrotty"
+            href={`https://github.com/${username}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-accent hover:bg-accent/90 transition-colors rounded-full text-white font-medium"

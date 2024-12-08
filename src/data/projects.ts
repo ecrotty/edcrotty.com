@@ -1,41 +1,55 @@
-import type { Project } from '../types/project';
+interface Project {
+  title: string;
+  description: string;
+  repoName: string;
+  image: string;
+  technologies: string[];
+  liveUrl?: string;
+}
+
+const getGithubUrl = (repoName: string) => {
+  const username = import.meta.env.PUBLIC_GITHUB_USERNAME;
+  if (!username) {
+    throw new Error('PUBLIC_GITHUB_USERNAME environment variable is not set');
+  }
+  return `https://github.com/${username}/${repoName}`;
+};
+
+const getLiveUrl = (subdomain: string) => {
+  const domain = import.meta.env.PUBLIC_SITE_DOMAIN;
+  if (!domain) {
+    throw new Error('PUBLIC_SITE_DOMAIN environment variable is not set');
+  }
+  return `https://${subdomain}.${domain}`;
+};
 
 export const projects: Project[] = [
   {
-    title: "Enterprise Authentication Service",
-    description: "Secure, scalable authentication system serving multiple enterprise applications",
-    technologies: ["Node.js", "Express", "MongoDB", "JWT", "Docker"],
-    githubUrl: "https://github.com/ecrotty/auth-service",
+    title: "Authentication Service",
+    description: "A secure authentication service built with AWS Cognito and Lambda",
+    repoName: "auth-service",
     image: "/projects/auth-service.png",
-    metrics: [
-      { label: "Users", value: "100K+" },
-      { label: "Uptime", value: "99.99%" },
-      { label: "Response Time", value: "<100ms" }
-    ]
+    technologies: ["Terraform", "AWS", "Python", "CloudFormation"]
   },
   {
-    title: "Cloud Infrastructure Automation",
-    description: "Infrastructure as Code solution for AWS cloud resources",
-    technologies: ["Terraform", "AWS", "Python", "CloudFormation"],
-    githubUrl: "https://github.com/ecrotty/cloud-automation",
+    title: "Cloud Automation",
+    description: "Infrastructure as Code templates and automation scripts",
+    repoName: "cloud-automation",
     image: "/projects/cloud-automation.png",
-    metrics: [
-      { label: "Resources", value: "500+" },
-      { label: "Cost Savings", value: "40%" },
-      { label: "Deployment Time", value: "-60%" }
-    ]
+    technologies: ["React", "TypeScript", "Storybook", "Jest"]
   },
   {
     title: "React Component Library",
-    description: "Reusable UI component library with modern design system",
+    description: "A collection of reusable React components",
+    repoName: "react-components",
+    image: "/projects/react-components.png",
     technologies: ["React", "TypeScript", "Storybook", "Jest"],
-    githubUrl: "https://github.com/ecrotty/react-components",
-    liveUrl: "https://components.edcrotty.com",
-    image: "/projects/component-library.png",
-    metrics: [
-      { label: "Components", value: "50+" },
-      { label: "Test Coverage", value: "95%" },
-      { label: "Bundle Size", value: "12KB" }
-    ]
+    liveUrl: getLiveUrl('components')
   }
 ];
+
+// Add githubUrl to each project
+export const projectsWithUrls = projects.map(project => ({
+  ...project,
+  githubUrl: getGithubUrl(project.repoName)
+}));

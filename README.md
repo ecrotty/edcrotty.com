@@ -61,8 +61,35 @@ While this is my personal resume website, I've made it available as a template f
    - Customize the showcase layout in `src/components/showcase/`
 
 5. **GitHub Integration**:
-   - Update GitHub username in relevant components
-   - Customize which repositories to showcase
+   - Copy `.env.example` to `.env` and update the values
+   - Set your GitHub username in `PUBLIC_GITHUB_USERNAME`
+   - Update other site configuration variables as needed
+
+## ⚙️ Environment Variables
+
+The following environment variables can be configured in your `.env` file:
+
+```bash
+# GitHub Configuration
+PUBLIC_GITHUB_USERNAME=your-github-username    # Required for GitHub integration
+
+# Site Configuration
+PUBLIC_SITE_DOMAIN=yourdomain.com             # Your root domain (e.g., example.com)
+PUBLIC_SITE_URL=https://yourdomain.com        # Full URL to your website
+PUBLIC_SITE_TITLE=Your Name - Professional Resume
+PUBLIC_SITE_DESCRIPTION=Personal resume website and portfolio
+```
+
+These variables are used throughout the site:
+- `PUBLIC_GITHUB_USERNAME`: Used for GitHub integration and repository links
+- `PUBLIC_SITE_DOMAIN`: Used for generating URLs to subdomains (e.g., components.yourdomain.com)
+- `PUBLIC_SITE_URL`: Used for SEO and canonical URLs
+- `PUBLIC_SITE_TITLE` and `PUBLIC_SITE_DESCRIPTION`: Used for metadata and SEO
+
+To set up your environment:
+1. Copy `.env.example` to `.env`
+2. Update the values in `.env` with your information
+3. Never commit your `.env` file (it's already in .gitignore)
 
 ## 🚀 Getting Started
 
@@ -71,17 +98,23 @@ While this is my personal resume website, I've made it available as a template f
 git clone https://github.com/yourusername/your-resume-site.git
 ```
 
-2. Install dependencies:
+2. Set up environment variables:
+```bash
+cp .env.example .env
+```
+Then edit `.env` with your information.
+
+3. Install dependencies:
 ```bash
 npm install
 ```
 
-3. Start the development server:
+4. Start the development server:
 ```bash
 npm run dev
 ```
 
-4. Build for production:
+5. Build for production:
 ```bash
 npm run build
 ```
