@@ -15,6 +15,9 @@ const categoryTitles = {
 };
 
 const SkillGroup: React.FC<SkillGroupProps> = ({ group }) => {
+  // Sort skills by level in descending order
+  const sortedSkills = [...group.skills].sort((a, b) => b.level - a.level);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -24,7 +27,7 @@ const SkillGroup: React.FC<SkillGroupProps> = ({ group }) => {
     >
       <h3 className="text-xl font-bold mb-4">{categoryTitles[group.category]}</h3>
       <div>
-        {group.skills.map((skill, index) => (
+        {sortedSkills.map((skill, index) => (
           <SkillBar key={skill.name} skill={skill} index={index} />
         ))}
       </div>
