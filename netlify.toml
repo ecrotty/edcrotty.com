@@ -12,18 +12,21 @@ NETLIFY_USE_YARN = "false"
   PUBLIC_GITHUB_USERNAME = "ecrotty"
   PUBLIC_SITE_TITLE = "Ed Crotty's Professional Portfolio - IT Leader"
   PUBLIC_SITE_DESCRIPTION = "Ed Crotty's Professional Portfolio - IT Leader"
+  PUBLIC_CALENDLY_URL = "https://calendly.com/edcrotty"
 
 [context.deploy-preview]
   [context.deploy-preview.environment]
   PUBLIC_GITHUB_USERNAME = "ecrotty"
   PUBLIC_SITE_TITLE = "Ed Crotty's Professional Portfolio - IT Leader"
   PUBLIC_SITE_DESCRIPTION = "Ed Crotty's Professional Portfolio - IT Leader"
+  PUBLIC_CALENDLY_URL = "https://calendly.com/edcrotty"
 
 [context.branch-deploy]
   [context.branch-deploy.environment]
   PUBLIC_GITHUB_USERNAME = "ecrotty"
   PUBLIC_SITE_TITLE = "Ed Crotty's Professional Portfolio - IT Leader"
   PUBLIC_SITE_DESCRIPTION = "Ed Crotty's Professional Portfolio - IT Leader"
+  PUBLIC_CALENDLY_URL = "https://calendly.com/edcrotty"
 
 [dev]
 command = "npm run dev"
