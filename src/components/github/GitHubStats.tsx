@@ -61,8 +61,8 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
 
   if (!username) {
     return (
-      <section className="py-20 px-4 bg-white/5">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-20 bg-white/5">
+        <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-8 text-center">Featured GitHub Projects</h2>
           <div className="text-center text-red-400">
             GitHub integration is not properly configured. Please check the environment variables in your Netlify dashboard.
@@ -73,12 +73,12 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
   }
 
   return (
-    <section className="py-20 bg-white/5 overflow-x-hidden">
+    <section className="py-20 bg-white/5 w-full overflow-hidden">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="max-w-6xl mx-auto px-4"
+        className="max-w-6xl mx-auto px-4 w-full"
       >
         <h2 className="text-3xl font-bold mb-8 text-center">Featured GitHub Projects</h2>
         
@@ -101,13 +101,13 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
         )}
 
         {!loading && !error && repos.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
             {repos.map((repo, index) => (
               <div 
                 key={repo.name} 
-                className={`${
+                className={`w-full ${
                   index === repos.length - 1 && repos.length % 2 !== 0
-                    ? 'col-span-2'
+                    ? 'md:col-span-2'
                     : ''
                 }`}
               >
