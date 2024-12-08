@@ -73,12 +73,12 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
   }
 
   return (
-    <section className="py-20 px-4 bg-white/5">
+    <section className="py-20 bg-white/5 overflow-x-hidden">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="max-w-6xl mx-auto"
+        className="max-w-6xl mx-auto px-4"
       >
         <h2 className="text-3xl font-bold mb-8 text-center">Featured GitHub Projects</h2>
         
