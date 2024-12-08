@@ -1,5 +1,6 @@
 ---
 import { Analytics } from '@vercel/analytics/react';
+import ContactButton from '../components/contact/ContactButton';
 
 interface Props {
   title?: string;
@@ -23,9 +24,12 @@ const description = props.description || siteDescription;
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <link href="https://calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://calendly.com/assets/external/widget.js" type="text/javascript" async></script>
   </head>
   <body class="bg-primary text-white">
     <slot />
+    <ContactButton client:load />
     <Analytics client:load />
   </body>
 </html>
