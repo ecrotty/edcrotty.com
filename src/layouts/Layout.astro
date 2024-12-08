@@ -5,9 +5,12 @@ interface Props {
   description?: string;
 }
 
+const defaultTitle = import.meta.env.PUBLIC_SITE_TITLE || "Ed Crotty's Professional Portfolio - IT Leader";
+const defaultDescription = import.meta.env.PUBLIC_SITE_DESCRIPTION || "Ed Crotty's Professional Portfolio - IT Leader";
+
 const { 
-  title = import.meta.env.PUBLIC_SITE_TITLE || "Ed Crotty's Professional Portfolio - IT Leader",
-  description = import.meta.env.PUBLIC_SITE_DESCRIPTION || "Ed Crotty's Professional Portfolio - IT Leader"
+  title = defaultTitle,
+  description = defaultDescription
 } = Astro.props;
 ---
 
