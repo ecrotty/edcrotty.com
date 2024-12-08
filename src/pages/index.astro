@@ -5,13 +5,19 @@ import Timeline from '../components/experience/Timeline';
 import GitHubStats from '../components/github/GitHubStats';
 import SkillsMatrix from '../components/skills/SkillsMatrix';
 import HiddenTechnicalShowcase from '../components/showcase/HiddenTechnicalShowcase';
+
+// Get GitHub username from environment variables
+const githubUsername = import.meta.env.PUBLIC_GITHUB_USERNAME;
+if (!githubUsername) {
+  console.error('PUBLIC_GITHUB_USERNAME environment variable is not set');
+}
 ---
 
 <Layout title="Ed Crotty - Cloud Ops Engineer">
   <main class="animate-fade-in">
     <Header client:load />
     <Timeline client:visible />
-    <GitHubStats client:visible />
+    <GitHubStats username={githubUsername} client:visible />
     <SkillsMatrix client:visible />
     <!-- Technical Showcase section is hidden but preserved in the codebase -->
     <HiddenTechnicalShowcase client:visible />
