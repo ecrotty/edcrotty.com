@@ -54,7 +54,7 @@ export const experiences: Experience[] = [
   },
   {
     company: "Stauffer Glove And Safety",
-    role: "IT Manager",
+    role: "Infrastructure Systems Manager",
     period: "August 2020 - September 2023",
     description: [
       "Led and mentored team of 5 IT professionals",
