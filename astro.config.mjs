@@ -10,13 +10,14 @@ console.log('NODE_ENV:', process.env.NODE_ENV);
 export default defineConfig({
   integrations: [tailwind(), react()],
   site: 'https://edcrotty.com',
-  // Add environment variables at the root level
-  env: {
-    PUBLIC_GITHUB_USERNAME: process.env.PUBLIC_GITHUB_USERNAME,
-  },
-  server: {
-    // Log environment variables in dev mode
-    host: '0.0.0.0',
-    port: 4321,
-  },
+  output: 'static',
+  // Ensure environment variables are available
+  vite: {
+    define: {
+      'process.env.PUBLIC_GITHUB_USERNAME': JSON.stringify(process.env.PUBLIC_GITHUB_USERNAME),
+    },
+    ssr: {
+      noExternal: ['@astrojs/*']
+    }
+  }
 });
