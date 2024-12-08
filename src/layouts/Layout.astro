@@ -6,8 +6,8 @@ interface Props {
 }
 
 const { 
-  title = process.env.PUBLIC_SITE_TITLE || "Ed Crotty's Professional Portfolio - IT Leader",
-  description = process.env.PUBLIC_SITE_DESCRIPTION || "Ed Crotty's Professional Portfolio - IT Leader"
+  title = import.meta.env.PUBLIC_SITE_TITLE || "Ed Crotty's Professional Portfolio - IT Leader",
+  description = import.meta.env.PUBLIC_SITE_DESCRIPTION || "Ed Crotty's Professional Portfolio - IT Leader"
 } = Astro.props;
 ---
 
