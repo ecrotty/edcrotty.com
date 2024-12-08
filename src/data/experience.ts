@@ -13,7 +13,6 @@ export const experiences: Experience[] = [
     technologies: ["Azure", "Python", "Terraform", "Linux", "Windows Server", "Cloud"],
     achievements: [
       "Implemented StatusGator for streamlined third-party service monitoring",
-      "Developed Python script for automated DNS record migration to Azure",
       "Led successful helpdesk launch coordinating internal teams and MSP",
       "Created comprehensive Azure resource inventory and documentation"
     ],
