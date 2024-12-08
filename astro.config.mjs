@@ -9,7 +9,9 @@ export default defineConfig({
   vite: {
     define: {
       'process.env.PUBLIC_GITHUB_USERNAME': JSON.stringify(process.env.PUBLIC_GITHUB_USERNAME),
-      'process.env.PUBLIC_SITE_TITLE': JSON.stringify(process.env.PUBLIC_SITE_TITLE),
+      'process.env.PUBLIC_SITE_DESCRIPTION': JSON.stringify(process.env.PUBLIC_SITE_DESCRIPTION),
+      'process.env.PUBLIC_SITE_DOMAIN': JSON.stringify(process.env.PUBLIC_SITE_DOMAIN),
+      'process.env.PUBLIC_SITE_URL': JSON.stringify(process.env.PUBLIC_SITE_URL),
     },
     ssr: {
       noExternal: ['@astrojs/*']

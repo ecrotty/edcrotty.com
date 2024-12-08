@@ -44,17 +44,16 @@ While this is my personal resume website, I've made it available as a template f
 
 ## ⚙️ Environment Variables
 
-The following environment variables need to be configured:
+The following environment variables need to be configured in your Netlify dashboard (or .env file for local development):
 
 ```bash
-# Required for GitHub integration
+# Required - GitHub Integration
 PUBLIC_GITHUB_USERNAME=your-github-username
 
-# Optional site configuration
+# Required - Site Configuration
+PUBLIC_SITE_DESCRIPTION=Your site description
 PUBLIC_SITE_DOMAIN=yourdomain.com
 PUBLIC_SITE_URL=https://yourdomain.com
-PUBLIC_SITE_TITLE=Your Name - Professional Resume
-PUBLIC_SITE_DESCRIPTION=Personal resume website and portfolio
 ```
 
 ### Setting Up Environment Variables
@@ -66,7 +65,13 @@ PUBLIC_SITE_DESCRIPTION=Personal resume website and portfolio
 2. Netlify Deployment:
    - Go to your Netlify site dashboard
    - Navigate to Site settings > Build & deploy > Environment
-   - Add the required environment variables
+   - Add each environment variable:
+     * PUBLIC_GITHUB_USERNAME
+     * PUBLIC_SITE_DESCRIPTION
+     * PUBLIC_SITE_DOMAIN
+     * PUBLIC_SITE_URL
+
+Note: After updating environment variables in Netlify, you may need to trigger a new deployment and clear the cache for changes to take effect.
 
 ## 🛠️ Customization Guide
 
