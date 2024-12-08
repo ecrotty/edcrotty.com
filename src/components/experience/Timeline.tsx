@@ -30,8 +30,6 @@ const Timeline: React.FC = () => {
         />
 
         <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-px bg-accent/20" />
-          
           {filteredExperiences.map((experience, index) => (
             <TimelineCard
               key={`${experience.company}-${experience.period}`}
