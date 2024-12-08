@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header';
+import Timeline from '../components/experience/Timeline';
+import GitHubStats from '../components/github/GitHubStats';
+import SkillsMatrix from '../components/skills/SkillsMatrix';
+import HiddenTechnicalShowcase from '../components/showcase/HiddenTechnicalShowcase';
+---
+
+<Layout title="Ed Crotty - Cloud Ops Engineer">
+  <main class="animate-fade-in">
+    <Header client:load />
+    <Timeline client:visible />
+    <GitHubStats client:visible />
+    <SkillsMatrix client:visible />
+    <!-- Technical Showcase section is hidden but preserved in the codebase -->
+    <HiddenTechnicalShowcase client:visible />
+  </main>
+</Layout>
