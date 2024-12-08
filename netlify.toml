@@ -4,16 +4,24 @@ publish = "dist"
 
 [build.environment]
 NODE_VERSION = "18"
+NETLIFY_USE_YARN = "false"
+
+# Explicitly set environment variables for all contexts
+[context.production.environment]
+PUBLIC_GITHUB_USERNAME = "ecrotty"
+
+[context.deploy-preview.environment]
+PUBLIC_GITHUB_USERNAME = "ecrotty"
+
+[context.branch-deploy.environment]
+PUBLIC_GITHUB_USERNAME = "ecrotty"
 
 [dev]
 command = "npm run dev"
 targetPort = 4321
 
-# Ensure environment variables are available during build
-[context.production.environment]
-PUBLIC_GITHUB_USERNAME = ""  # Will be overridden by Netlify UI settings
-PUBLIC_SITE_DOMAIN = ""     # Will be overridden by Netlify UI settings
-
-[context.deploy-preview.environment]
-PUBLIC_GITHUB_USERNAME = ""  # Will be overridden by Netlify UI settings
-PUBLIC_SITE_DOMAIN = ""     # Will be overridden by Netlify UI settings
+# Add build plugin for environment variables
+[[plugins]]
+package = "@netlify/plugin-env"
+  [plugins.inputs]
+  include = ["PUBLIC_*"]
