@@ -10,3 +10,32 @@ export interface Repository {
   updated_at: string;
   topics: string[];
 }
+
+export interface GitHubGraphQLResponse {
+  data: {
+    user: {
+      pinnedItems: {
+        nodes: Array<{
+          name: string;
+          description: string | null;
+          url: string;
+          stargazerCount: number;
+          forkCount: number;
+          primaryLanguage: {
+            name: string;
+            color: string;
+          } | null;
+          isPrivate: boolean;
+          updatedAt: string;
+          repositoryTopics: {
+            nodes: Array<{
+              topic: {
+                name: string;
+              };
+            }>;
+          };
+        }>;
+      };
+    };
+  };
+}

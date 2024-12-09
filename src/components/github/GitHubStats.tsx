@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import RepoCard from './RepoCard';
-import type { Repository } from '../../types/github';
+import type { Repository, GitHubGraphQLResponse } from '../../types/github';
+import { PINNED_REPOS_QUERY } from '../../constants/github';
 
 interface GitHubStatsProps {
   username: string;
   initialRepos: Repository[];
+  usesPinnedRepos: boolean;
 }
 
-const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => {
+const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos, usesPinnedRepos }) => {
   const [repos, setRepos] = useState<Repository[]>(initialRepos);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isPinned, setIsPinned] = useState(usesPinnedRepos);
 
   useEffect(() => {
     const fetchRepos = async () => {
@@ -27,6 +30,46 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
 
       setLoading(true);
       try {
+        // Try to fetch pinned repositories if token is available
+        const token = process.env.GITHUB_TOKEN;
+        if (token) {
+          const response = await fetch('https://api.github.com/graphql', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              query: PINNED_REPOS_QUERY,
+              variables: { username }
+            })
+          });
+
+          if (response.ok) {
+            const data: GitHubGraphQLResponse = await response.json();
+            if (data.data?.user?.pinnedItems?.nodes) {
+              const pinnedRepos = data.data.user.pinnedItems.nodes.map(node => ({
+                name: node.name,
+                description: node.description,
+                html_url: node.url,
+                stargazers_count: node.stargazerCount,
+                forks_count: node.forkCount,
+                language: node.primaryLanguage?.name || null,
+                language_color: node.primaryLanguage?.color || null,
+                private: node.isPrivate,
+                updated_at: node.updatedAt,
+                topics: node.repositoryTopics.nodes.map(topic => topic.topic.name)
+              }));
+              setRepos(pinnedRepos);
+              setIsPinned(true);
+              setError(null);
+              setLoading(false);
+              return;
+            }
+          }
+        }
+
+        // Fall back to latest repositories
         const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`);
         if (!response.ok) {
           throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
@@ -50,6 +93,7 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
           }));
 
         setRepos(filteredRepos);
+        setIsPinned(false);
         setError(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch repositories');
@@ -61,11 +105,13 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
     fetchRepos();
   }, [username, initialRepos]);
 
+  const sectionTitle = isPinned ? "Featured GitHub Projects" : "Latest GitHub Projects";
+
   if (!username) {
     return (
       <section className="py-20 bg-white/5">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">Latest GitHub Projects</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">{sectionTitle}</h2>
           <div className="text-center text-red-400">
             GitHub integration is not properly configured. Please check the environment variables in your Netlify dashboard.
           </div>
@@ -82,7 +128,7 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
         transition={{ duration: 0.5 }}
         className="max-w-6xl mx-auto px-4 w-full"
       >
-        <h2 className="text-3xl font-bold mb-8 text-center">Latest GitHub Projects</h2>
+        <h2 className="text-3xl font-bold mb-8 text-center">{sectionTitle}</h2>
         
         {loading && (
           <div className="text-center text-gray-300">

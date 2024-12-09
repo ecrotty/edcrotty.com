@@ -13,7 +13,9 @@ While this is my personal resume website, I've made it available as a template f
 - 🛠️ Skills matrix with customizable categories
 - 📱 Mobile-friendly layout
 - 🔧 Technical showcase section
-- 📊 GitHub integration for displaying repositories and stats
+- 📊 Flexible GitHub integration with two display modes:
+  - Featured Projects (displays pinned repositories)
+  - Latest Projects (displays most recent repositories)
 - 📅 Calendly integration for scheduling meetings
 - ⚡ Built with Astro for optimal performance
 - 🎯 SEO-friendly structure
@@ -53,6 +55,11 @@ The following environment variables need to be configured in your Netlify dashbo
 # Required - GitHub Integration
 PUBLIC_GITHUB_USERNAME=your-github-username
 
+# Optional - GitHub Token for Pinned Repositories
+# If provided, displays your pinned repositories as "Featured GitHub Projects"
+# If not provided, displays your latest repositories as "Latest GitHub Projects"
+GITHUB_TOKEN=your-github-personal-access-token
+
 # Required - Site Configuration
 PUBLIC_SITE_TITLE=Your site title
 PUBLIC_SITE_DESCRIPTION=Your site description
@@ -73,7 +80,8 @@ PUBLIC_CALENDLY_URL=https://calendly.com/your-username
    - Go to your Netlify site dashboard
    - Navigate to Site settings > Build & deploy > Environment
    - Add each environment variable:
-     * PUBLIC_GITHUB_USERNAME
+     * PUBLIC_GITHUB_USERNAME (required)
+     * GITHUB_TOKEN (optional, for pinned repositories)
      * PUBLIC_SITE_TITLE
      * PUBLIC_SITE_DESCRIPTION
      * PUBLIC_SITE_DOMAIN
@@ -101,8 +109,14 @@ Note: After updating environment variables in Netlify, you may need to trigger a
    - Customize the showcase layout in `src/components/showcase/`
 
 5. **GitHub Integration**:
-   - Set your GitHub username in environment variables
-   - The site will automatically display your pinned repositories
+   - Set your GitHub username in environment variables (required)
+   - Optional: Set a GitHub token to display pinned repositories
+     * Without token: Displays 6 most recent repositories as "Latest GitHub Projects"
+     * With token: Displays your pinned repositories as "Featured GitHub Projects"
+   - To use pinned repositories:
+     1. Create a GitHub token with 'repo' scope
+     2. Pin repositories on your GitHub profile
+     3. Add the token to your environment variables
 
 6. **Calendly Integration**:
    - Set your Calendly URL in environment variables
