@@ -20,6 +20,11 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
         return;
       }
 
+      // Only fetch if we don't have initial repos
+      if (initialRepos.length > 0) {
+        return;
+      }
+
       setLoading(true);
       try {
         const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`);
@@ -29,7 +34,7 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
         
         const data = await response.json();
         const filteredRepos = data
-          .filter((repo: any) => !repo.fork)
+          .filter((repo: any) => !repo.fork && !repo.private)
           .slice(0, 6)
           .map((repo: any) => ({
             name: repo.name,
@@ -53,17 +58,14 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
       }
     };
 
-    // Only fetch if we don't have initial repos
-    if (initialRepos.length === 0) {
-      fetchRepos();
-    }
+    fetchRepos();
   }, [username, initialRepos]);
 
   if (!username) {
     return (
       <section className="py-20 bg-white/5">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-8 text-center">Featured GitHub Projects</h2>
+          <h2 className="text-3xl font-bold mb-8 text-center">Latest GitHub Projects</h2>
           <div className="text-center text-red-400">
             GitHub integration is not properly configured. Please check the environment variables in your Netlify dashboard.
           </div>
@@ -80,7 +82,7 @@ const GitHubStats: React.FC<GitHubStatsProps> = ({ username, initialRepos }) => 
         transition={{ duration: 0.5 }}
         className="max-w-6xl mx-auto px-4 w-full"
       >
-        <h2 className="text-3xl font-bold mb-8 text-center">Featured GitHub Projects</h2>
+        <h2 className="text-3xl font-bold mb-8 text-center">Latest GitHub Projects</h2>
         
         {loading && (
           <div className="text-center text-gray-300">

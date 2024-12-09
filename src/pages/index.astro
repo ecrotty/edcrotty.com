@@ -18,7 +18,7 @@ if (githubUsername) {
     if (response.ok) {
       const data = await response.json();
       repos = data
-        .filter((repo: any) => !repo.fork)
+        .filter((repo: any) => !repo.fork && !repo.private)
         .slice(0, 6)
         .map((repo: any) => ({
           name: repo.name,
