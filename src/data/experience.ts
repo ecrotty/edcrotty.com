@@ -13,7 +13,7 @@ export const experiences: Experience[] = [
     technologies: ["Azure", "Python", "Terraform", "Linux", "Windows Server", "Cloud"],
     achievements: [
       "Implemented StatusGator for streamlined third-party service monitoring",
-      "Led successful helpdesk launch coordinating internal teams and MSP",
+      "Automated Azure environment monitoring with high-impact scripts",
       "Created comprehensive Azure resource inventory and documentation"
     ],
     logo: "/company-logos/tandigm.png"
@@ -80,7 +80,7 @@ export const experiences: Experience[] = [
     ],
     technologies: ["VMware", "Azure", "Windows Server", "Linux", "M365", "Infrastructure"],
     achievements: [
-      "Migrated 4-node VMware VxRail cluster to Azure",
+      "Migrated 4-node VMware VxRail cluster to Azure with zero downtime",
       "Implemented zero trust network architecture",
       "Increased employee satisfaction by 50% with ITIL/ITSM implementation",
       "Successfully transitioned to Microsoft 365 with MDM and Azure AD"
@@ -93,7 +93,7 @@ export const experiences: Experience[] = [
     period: "August 2003 - September 2008",
     description: [
       "Led technical architecture for MarketWatch acquisition",
-      "Managed Newswires division engineering team",
+      "Team Lead Of Newswires technical team",
       "Recruited directly by CTO for engineering initiatives"
     ],
     technologies: ["Enterprise Architecture", "Team Leadership", "Systems Integration", "Infrastructure"],
@@ -113,8 +113,9 @@ export const experiences: Experience[] = [
       "Pioneered online betting infrastructure",
       "Managed critical systems for NYC clients"
     ],
-    technologies: ["High Availability Systems", "Enterprise Infrastructure", "Infrastructure"],
+    technologies: ["High Availability Systems", "Enterprise Infrastructure", "AI"],
     achievements: [
+      "Engineered College Board's Intellimetric AI with 90% human-grade accuracy",
       "Built infrastructure for first online horserace bet in 1997",
       "Developed solutions for DoubleClick and other major NYC enterprises",
       "Established reliable hosting infrastructure"
