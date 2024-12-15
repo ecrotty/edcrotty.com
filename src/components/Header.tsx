@@ -50,7 +50,7 @@ const Header = () => {
           />
         </div>
         <p className="max-w-2xl mx-auto text-gray-300">
-          I'm Ed Crotty—a seasoned technologist and entrepreneur who turns complex challenges into streamlined, scalable solutions. By blending hands-on execution with industry best practices, I help teams adopt emerging technologies to drive sustainable growth. My work bridges vision and execution, ensuring every initiative delivers measurable impact and lasting value.
+          I'm Ed Crotty—a seasoned technologist and entrepreneur dedicated to turning complexity into streamlined, sustainable solutions. By combining hands-on execution with best practices, I guide teams to adopt emerging technologies that deliver measurable growth. My approach ensures every initiative bridges vision and execution, resulting in lasting value.
         </p>
       </motion.div>
     </header>
