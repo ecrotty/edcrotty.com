@@ -35,6 +35,8 @@ const Header = () => {
             sequence={[
               'IT Leader',
               1000,
+              'Staff Engineer',
+              1000,
               'AI Strategist',
               1000,
               'Cloud Operations Specialist',
