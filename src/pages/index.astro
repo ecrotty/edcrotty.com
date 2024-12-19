@@ -5,85 +5,22 @@ import Timeline from '../components/experience/Timeline';
 import GitHubStats from '../components/github/GitHubStats';
 import SkillsMatrix from '../components/skills/SkillsMatrix';
 import HiddenTechnicalShowcase from '../components/showcase/HiddenTechnicalShowcase';
-import type { Repository, GitHubGraphQLResponse } from '../types/github';
-import { PINNED_REPOS_QUERY } from '../constants/github';
+import { fetchGitHubData } from '../data/github';
 
-// Get GitHub username and token from environment variables
-const githubUsername = process.env.PUBLIC_GITHUB_USERNAME;
-const githubToken = process.env.GITHUB_TOKEN;
-
-// Fetch GitHub data at build time
-let repos: Repository[] = [];
-let usesPinnedRepos = false;
-
-if (githubUsername) {
-  try {
-    // Try to fetch pinned repositories if token is available
-    if (githubToken) {
-      const response = await fetch('https://api.github.com/graphql', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${githubToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: PINNED_REPOS_QUERY,
-          variables: { username: githubUsername }
-        })
-      });
-
-      if (response.ok) {
-        const data: GitHubGraphQLResponse = await response.json();
-        if (data.data?.user?.pinnedItems?.nodes) {
-          repos = data.data.user.pinnedItems.nodes.map(node => ({
-            name: node.name,
-            description: node.description,
-            html_url: node.url,
-            stargazers_count: node.stargazerCount,
-            forks_count: node.forkCount,
-            language: node.primaryLanguage?.name || null,
-            language_color: node.primaryLanguage?.color || null,
-            private: node.isPrivate,
-            updated_at: node.updatedAt,
-            topics: node.repositoryTopics.nodes.map(topic => topic.topic.name)
-          }));
-          usesPinnedRepos = true;
-        }
-      }
-    }
-
-    // Fall back to latest repositories if pinned repos fetch failed or token not available
-    if (!usesPinnedRepos) {
-      const response = await fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=100`);
-      if (response.ok) {
-        const data = await response.json();
-        repos = data
-          .filter((repo: any) => !repo.fork && !repo.private)
-          .slice(0, 6)
-          .map((repo: any) => ({
-            name: repo.name,
-            description: repo.description,
-            html_url: repo.html_url,
-            stargazers_count: repo.stargazers_count,
-            forks_count: repo.forks_count,
-            language: repo.language,
-            language_color: null,
-            private: repo.private,
-            updated_at: repo.updated_at,
-            topics: repo.topics || []
-          }));
-      }
-    }
-  } catch (error) {
-    console.error('Error fetching GitHub repositories:', error);
-  }
-}
+const { repos, usesPinnedRepos, githubUsername } = await fetchGitHubData();
 ---
 
 <Layout>
   <main class="animate-fade-in">
     <Header client:load />
     <Timeline client:visible />
+    <section class="pt-16 pb-32">
+      <div class="max-w-4xl mx-auto px-4">
+        <blockquote class="text-2xl md:text-3xl text-center text-gray-200 font-light">
+          "I solve root cause business problems with best practice tech."
+        </blockquote>
+      </div>
+    </section>
     <GitHubStats 
       username={githubUsername} 
       initialRepos={repos} 

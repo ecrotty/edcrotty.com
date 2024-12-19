@@ -10,6 +10,7 @@ While this is my personal resume website, I've made it available as a template f
 
 - 🎨 Modern, responsive design with smooth animations
 - 💼 Professional experience timeline
+- 💭 Personal mission statement quote
 - 🛠️ Skills matrix with customizable categories
 - 📱 Mobile-friendly layout
 - 🔧 Technical showcase section
@@ -34,7 +35,8 @@ While this is my personal resume website, I've made it available as a template f
 │   │   ├── github/         # GitHub integration components
 │   │   ├── header/         # Header animations and styling
 │   │   ├── showcase/       # Project showcase components
-│   │   └── skills/        # Skills matrix components
+│   │   ├── skills/        # Skills matrix components
+│   │   └── Quote.tsx      # Mission statement quote component
 │   ├── data/
 │   │   ├── contact.ts      # Calendly configuration
 │   │   ├── experience.ts   # Your work experience data
@@ -95,6 +97,7 @@ Note: After updating environment variables in Netlify, you may need to trigger a
 1. **Personal Information**:
    - Update the site metadata in `src/layouts/Layout.astro`
    - Modify the header content in `src/components/Header.tsx`
+   - Customize your mission statement in `src/components/Quote.tsx`
 
 2. **Experience Timeline**:
    - Edit `src/data/experience.ts` to add your work history
